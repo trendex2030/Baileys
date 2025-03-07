@@ -1,4 +1,3 @@
-import type KeyedDB from '@adiwajshing/keyed-db';
 import type { Comparable } from '@adiwajshing/keyed-db/lib/Types';
 import type { Logger } from 'pino';
 import { proto } from '../../WAProto';
@@ -65,13 +64,13 @@ declare const _default: (config: BaileysInMemoryStoreConfig) => {
      *
      * @returns Label IDs
      **/
-    getChatLabels: (chatId: string) => LabelAssociation[];
+    getChatLabels: (chatId: string) => any;
     /**
      * Get labels for message
      *
      * @returns Label IDs
      **/
-    getMessageLabels: (messageId: string) => string[];
+    getMessageLabels: (messageId: string) => any;
     loadMessage: (jid: string, id: string) => Promise<proto.IWebMessageInfo | undefined>;
     mostRecentMessage: (jid: string) => Promise<proto.IWebMessageInfo>;
     fetchImageUrl: (jid: string, sock: WASocket | undefined) => Promise<string | null | undefined>;
@@ -105,7 +104,7 @@ declare const _default: (config: BaileysInMemoryStoreConfig) => {
             [id: string]: Contact;
         };
         messages: {
-            [id: string]: proto.IWebMessageInfo[];
+            [id: string]: WAMessage[];
         };
         labels: {
             [labelId: string]: Label;
