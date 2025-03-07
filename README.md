@@ -1,31 +1,714 @@
-# Baileys - Typescript/Javascript WhatsApp Web API
+# @FizzxyDev/BaileysPro - Typescript/Javascript WhatsApp Web API
+
+### INFORMATION !! 
+This Baileys has been modified by @FizzxyTheGreat && @KangFarrel. Don't use it for illegal activities or to harm other people. 
 
 ### Important Note
 
-This library was originally a project for **CS-2362 at Ashoka University** and is in no way affiliated with or endorsed by WhatsApp. Use at your own discretion. Do not spam people with this. We discourage any stalkerware, bulk or automated messaging usage. 
+This library was originally a project of *@adiwajshing/baileys* and is in no way affiliated with or endorsed by WhatsApp. Use at your own discretion. Don't spam others with this. We do not encourage the use of stalking, mass or automated messaging.
 
 #### Liability and License Notice
-Baileys and its maintainers cannot be held liable for misuse of this application, as stated in the [MIT license](https://github.com/LT-SYAII/Bail/blob/master/LICENSE).
-The maintainers of Baileys do not in any way condone the use of this application in practices that violate the Terms of Service of WhatsApp. The maintainers of this application call upon the personal responsibility of its users to use this application in a fair way, as it is intended to be used.
+Fizzxy and its managers are not responsible for misuse of this application, as stated in the MIT license. Fizzxy management in no way condones the use of this application in practices that violate the WhatsApp Terms of Service. The manager of this application holds its users personally responsible for using this application in a fair manner, as it is intended to be used.
 ##
 
-Baileys does not require Selenium or any other browser to be interface with WhatsApp Web, it does so directly using a **WebSocket**. 
-Not running Selenium or Chromimum saves you like **half a gig** of ram :/ 
-Baileys supports interacting with the multi-device & web versions of WhatsApp.
-Thank you to [@pokearaujo](https://github.com/pokearaujo/multidevice) for writing his observations on the workings of WhatsApp Multi-Device. Also, thank you to [@Sigalor](https://github.com/sigalor/whatsapp-web-reveng) for writing his observations on the workings of WhatsApp Web and thanks to [@Rhymen](https://github.com/Rhymen/go-whatsapp/) for the __go__ implementation.
+BaileysPro doesn't require Selenium or any other browser to interact with WhatsApp Web, it does it directly using WebSocket. Not running Selenium or Chromimum saves half a gig of ram :/ BaileysPro supports interaction with multi-device & web versions of WhatsApp.
  
 ## Please Read
 
-The original repository had to be removed by the original author - we now continue development in this repository here.
-This is the only official repository and is maintained by the community.
- **Join the Discord [here](https://discord.gg/WeJM5FP9GG)**
+The original repository had to be removed by the original author - we are now continuing development of this repository here. This is one of the modification repositories and is maintained by Fizzxy.
+
+![My Card ](https://cardivo.vercel.app/api?name=FizzxyTheGreat%20&description=”aku%20hanya%20bisa%20memprogram%20nya,%20jika%20kodenya%20sudah%20benar,%20program%20itu%20akan%20berjalan%20sesuai,%20keinginan%20pemilik%20aslinya”%20(%20tapi%20ini%20bukan%20soal%20programnya%20)&image=https://b.top4top.io/p_2090f6xvx0.jpg&backgroundColor=%23ecf0f1&instagram=@wfizzx&github=FizzxyDev&pattern=leaf&colorPattern=%23eaeaea)
+
+___
+
+## Shop Message: 
+```
+client.sendMessage(
+    jid, 
+    {
+        text: "YOUR TEXT",
+        title: "YOUR TITLE",
+        subtitle: "YOUR SUBTITLE",
+        footer: "FOOTER",
+        viewOnce: true,
+        shop: 3,
+        id: "199872865193",
+    },
+  {
+    quoted : m
+  }
+)
+```
+
+#### Poll Result From Newsletter Message
+```ts
+await client.sendMessage(
+    jid,
+    {
+        pollResult: {
+            name: "Text poll",
+            votes: [["Options 1", 10], ["Options 2", 10]], // 10 For Fake Polling Count Results
+        }
+    }, { quoted : message }
+)
+```
+
+
+#### Status Mentions 
+```ts
+await sock.StatusMentions(
+     {
+        text: "Hello", // or image / video / audio ( url or buffer )
+     },
+     [
+      "123456789123456789@g.us",
+      "123456789@s.whatsapp.net",
+      // Enter jid chat here
+     ] // If the Jid Group and Jid Private Chat are included in the JID list, try to make the JID group first starting from the Jid Private Chat or Jid Private Chat in the middle between the group Jid
+)  
+```
+
+
+##### Cards Message
+```ts
+await client.sendMessage(
+    jid,
+    {
+        text: "Hello",
+        footer: "Footer Message",
+        cards: [
+           {
+              image: { url: 'https://example.jpg' }, // or buffer,
+              title: 'Title Cards',
+              caption: 'Caption Cards',
+              footer: 'Footer Cards',
+              buttons: [
+                  {
+                      name: "quick_reply",
+                      buttonParamsJson: JSON.stringify({
+                         display_text: "Display Button",
+                         id: "ID"
+                      })
+                  },
+                  {
+                      name: "cta_url",
+                      buttonParamsJson: JSON.stringify({
+                         display_text: "Display Button",
+                         url: "https://www.example.com"
+                      })
+                  }
+              ]
+           },
+           {
+              video: { url: 'https://example.mp4' }, // or buffer,
+              title: 'Title Cards',
+              caption: 'Caption Cards',
+              footer: 'Footer Cards',
+              buttons: [
+                  {
+                      name: "quick_reply",
+                      buttonParamsJson: JSON.stringify({
+                         display_text: "Display Button",
+                         id: "ID"
+                      })
+                  },
+                  {
+                      name: "cta_url",
+                      buttonParamsJson: JSON.stringify({
+                         display_text: "Display Button",
+                         url: "https://www.example.com"
+                      })
+                  }
+              ]
+           }
+        ]
+    },
+    { quoted : message }
+)
+```
+
+
+#### Album Message
+```ts
+await sock.AlbumMessage(
+    jid,
+    [
+       {
+          image: { url: "https://example.jpg" }, // or buffer
+          caption: "Hello World",
+       },
+       {
+          video: { url: "https://example.mp4" }, // or buffer
+          caption: "Hello World",
+       },
+    ],
+    { 
+       quoted : message, 
+       delay : 2000 // number in seconds
+    }
+)
+```
+
+
+#### Interactive Response Message
+```ts
+await client.sendMessage(
+    jid, 
+    {
+        buttonReply: {
+             text: 'Text',
+             nativeFlow: { 
+                version: 3,
+             },
+        },
+        type: 'interactive',
+        ephemeral: true,
+    }
+)
+```
+
+
+#### Keep Message
+- You need to pass the key of message, you can retrieve from [store](#implementing-a-data-store) or use a [key](https://baileys.whiskeysockets.io/types/WAMessageKey.html) object
+
+- Time can be:
+
+| Time  | Seconds        |
+|-------|----------------|
+| 24h    | 86.400        |
+| 7d     | 604.800       |
+| 30d    | 2.592.000     |
+
+```ts
+await client.sendMessage(
+    jid,
+    {
+        keep: message.key,
+        type: 1, // 2 to unpin
+        time: 86400    
+    }
+)
+```
+
+
+#### Pin Message
+- You need to pass the key of message, you can retrieve from [store](#implementing-a-data-store) or use a [key](https://baileys.whiskeysockets.io/types/WAMessageKey.html) object
+
+- Time can be:
+
+| Time  | Seconds        |
+|-------|----------------|
+| 24h    | 86.400        |
+| 7d     | 604.800       |
+| 30d    | 2.592.000     |
+
+```ts
+await client.sendMessage(
+    jid,
+    {
+        pin: message.key
+        type: 1, // 2 to unpin
+        time: 86400        
+    }
+)
+```
+
+
+#### Group Invite Message With Thumbnail According to Jid
+```ts
+await client.sendMessage(
+    jid, 
+    { 
+        groupInvite: { 
+            subject: "Your Group Name",  // Group name
+            jid: "1234@g.us", // Group ID 
+            text: "WhatsApp Group Invitation", // Additional information
+            inviteCode: "CODE INVITATION", // Group invitation code
+            inviteExpiration: 86400 * 3, // Expiration time in seconds (example: 86400 for 24 hours)
+        } 
+    },
+    {
+        quoted: message,
+        getProfilePicUrl: sock.profilePictureUrl
+    }
+)
+```
+
+
+#### Group Invite Message With Thumbnail Custom
+```ts
+  const thumbnail = "https://example.jpg" // or buffer
+// The image is used under 300 so that the thumbnail can be displayed 
+  let Jimp = require("jimp");
+  // import Jimp from "jimp"; => for type esm
+  let img = await Jimp.read(thumbnail);
+  let newWidth = img.bitmap.width;
+  let newHeight = img.bitmap.height;
+  if (newWidth > 300 || newHeight > 300) {
+      const aspectRatio = newWidth / newHeight;
+          if (aspectRatio > 1) {
+             newWidth = 300;
+             newHeight = Math.round(newWidth / aspectRatio);
+          } else {
+             newHeight = 300;
+             newWidth = Math.round(newHeight * aspectRatio);
+          }
+      }
+      let buff = await img
+          .resize(newWidth, newHeight)
+          .getBufferAsync(Jimp.MIME_JPEG);
+          
+await client.sendMessage(
+    jid, 
+    { 
+        groupInvite: { 
+            subject: "Your Group Name",  // Group name
+            jid: "1234@g.us", // Group ID 
+            text: "WhatsApp Group Invitation", // Additional information
+            inviteCode: "CODE INVITATION", // Group invitation code
+            inviteExpiration: number, // Expiration time in seconds (example: 86400 for 24 hours),
+            thumbnail: buff || null // if result not found or error
+        } 
+    },
+    { quoted: message }
+)
+```
+
+
+#### Request Payment Message Available To Quote Message
+```ts
+// Example non media sticker
+await client.sendMessage(
+    jid,
+    {
+        requestPayment: {      
+           currency: "IDR",
+           amount: "10000000",
+           from: "123456@s.whatsapp.net",
+           note: "Hai Guys",
+           background: { ...background of the message }
+        }
+    },
+    { quoted : message }
+)
+
+
+// with media sticker buffer
+await client.sendMessage(
+    jid,
+    {
+        requestPayment: {      
+           currency: "IDR",
+           amount: "10000000",
+           from: "123456@s.whatsapp.net",
+           sticker: Buffer,
+           background: { ...background of the message }
+        }
+    },
+    { quoted : message }
+)
+
+
+// with media sticker url
+await client.sendMessage(
+    jid,
+    {
+        requestPayment: {      
+           currency: "IDR",
+           amount: "10000000",
+           from: "123456@s.whatsapp.net",
+           sticker: { url: Sticker Url },
+           background: { ...background of the message }
+        }
+    },
+    { quoted : message }
+)
+```
+
+
+#### Event Message
+```ts
+await client.sendMessage(
+   jid, 
+   { 
+       event: {
+           isCanceled: false, // or true for cancel event 
+           name: "Name Event", 
+           description: "Description Event",
+           location: { 
+               degressLatitude: -0, 
+               degressLongitude: - 0 
+           },
+           link: Call Link,
+           startTime: m.messageTimestamp.low,
+           endTime: m.messageTimestamp.low + 86400, // 86400 is day in seconds
+           extraGuestsAllowed: true // or false
+       }
+   },
+   { quoted : message }
+)
+```
+
+
+#### Poll Message
+```ts
+await client.sendMessage(
+    jid,
+    {
+        poll: {
+            name: 'My Poll',
+            values: ['Option 1', 'Option 2', ...],
+            selectableCount: 1,
+            toAnnouncementGroup: false // or true
+        }
+    },
+    { quoted : message }
+)
+```
+
+
+#### Interactive Message
+```ts
+// Example non header media
+await client.sendMessage(
+    jid,
+    {
+        text: "Description Of Messages", //Additional information
+        title: "Title Of Messages",
+        subtitle: "Subtitle Message",
+        footer: "Footer Messages",
+        interactiveButtons: [
+             {
+                name: "quick_reply",
+                buttonParamsJson: JSON.stringify({
+                     display_text: "Display Button",
+                     id: "ID"
+                })
+             },
+             {
+                name: "cta_url",
+                buttonParamsJson: JSON.stringify({
+                     display_text: "Display Button",
+                     url: "https://www.example.com"
+                })
+             }
+        ]
+    },
+  {
+    quoted : message
+  }
+)
+
+// Example with media
+await client.sendMessage(
+    jid,
+    {
+        image: { url : "https://example.jpg" }, // Can buffer
+        caption: "Description Of Messages", //Additional information
+        title: "Title Of Messages",
+        subtitle: "Subtile Message",
+        footer: "Footer Messages",
+        media: true,
+        interactiveButtons: [
+             {
+                name: "quick_reply",
+                buttonParamsJson: JSON.stringify({
+                     display_text: "Display Button",
+                     id: "ID"
+                })
+             },
+             {
+                name: "cta_url",
+                buttonParamsJson: JSON.stringify({
+                     display_text: "Display Button",
+                     url: "https://www.example.com"
+                })
+             }
+        ]
+    },
+  {
+    quoted : message
+  }
+)
+
+// Example with header product
+await client.sendMessage(
+    jid,
+    {
+        product: {
+            productImage: { url: "https://example.jpg }, //or buffer
+            productImageCount: 1,
+            title: "Title Product",
+            description: "Description Product",
+            priceAmount1000: 20000 * 1000,
+            currencyCode: "IDR",
+            retailerId: "Retail",
+            url: "https://example.com",            
+        },
+        businessOwnerJid: "1234@s.whatsapp.net",
+        caption: "Description Of Messages", //Additional information
+        title: "Title Of Messages",
+        footer: "Footer Messages",
+        media: true,
+        interactiveButtons: [
+             {
+                name: "quick_reply",
+                buttonParamsJson: JSON.stringify({
+                     display_text: "Display Button",
+                     id: "ID"
+                })
+             },
+             {
+                name: "cta_url",
+                buttonParamsJson: JSON.stringify({
+                     display_text: "Display Button",
+                     url: "https://www.example.com"
+                })
+             }
+        ]
+    },
+  {
+    quoted : message
+  }
+)
+```
+
+## Buttons Message:
+```
+// send old a buttons
+client.sendMessage(m.chat, {
+     text: "Hello World !",
+     footer: "Fizzxy - 2025",
+     buttons: [ 
+         { buttonId: `🚀`,
+          buttonText: {
+              displayText: '🗿'
+          }, type: 1 }
+     ],
+     headerType: 1,
+     viewOnce: true
+ },{ quoted: null })
+ ```
  
+## send location buttons:
+```
+client.sendMessage(m.chat, {
+  location: {
+    degreesLatitude: -6.2088, // Ganti dengan latitude lokasi
+    degreesLongitude: 106.8456, // Ganti dengan longitude lokasi
+  },
+  caption: "Ini adalah lokasi yang dikirim.",
+  footer: "© FizzxyTheGreat",
+  buttons: [
+          { buttonId: `🚀`,
+          buttonText: {
+          displayText: '🗿'
+          },
+           type: 1 }
+          ], // isi buttons nya
+  headerType: 6,
+  viewOnce: true
+}, { quoted: m });
+```
+
+
+## send image buttons:
+ ```
+  client.sendMessage(m.chat, {
+  image: { url: "LINK YOUR IMAGE" },
+  caption: "Ini pesan gambar Buttons", 
+  footer: "© Fizzxy Dev",
+  buttons: [
+    {
+      buttonId: '.owner',
+      buttonText: {
+        displayText: 'Dev bot'
+      },
+      type: 1
+    },
+  ],
+  headerType: 1,
+  viewOnce: true
+}, { quoted: m })
+```
+
+## send document buttons:
+```
+let buttonMessage = {
+  document: { url: "https://www.youtube.com/" },
+  mimetype: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  fileName: "「 FizzxyTheGreat 」",
+  fileLength: 999,
+  pageCount: 999,
+  contextInfo: {
+    forwardingScore: 555,
+    isForwarded: true,
+    externalAdReply: {
+      mediaUrl: "https://www.youtube.com/",
+      mediaType: 2,
+      previewType: "pdf",
+      title: "kamu mana punya",
+      body: "ini", 
+      thumbnail: fs.readFileSync("./path/to/image"),
+      sourceUrl: "https://www.youtube.com/",
+    },
+  },
+  caption: "tes",
+  footer: "2020",
+  buttons: [
+    {
+    buttonId: "ID MU", 
+    buttonText: { 
+      displayText: 'Display text' 
+    }
+  }, {
+    buttonId: "ID MU", 
+    buttonText: {
+      displayText: "DISPLAY TEXT"
+    }
+  }
+  ],
+  viewOnce: true,
+  headerType: 6,
+};
+
+return await client.sendMessage(m.chat, buttonMessage, { quoted: null });
+```
+
+## send all buttons interactive:
+ ```
+const { generateWAMessageFromContent, proto } = require("@FizzxyDev/BaileysPro")
+let msg = generateWAMessageFromContent(m.chat, {
+  viewOnceMessage: {
+    message: {
+        "messageContextInfo": {
+          "deviceListMetadata": {},
+          "deviceListMetadataVersion": 2
+        },
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: "Fizzxy Dev"
+          }),
+          footer: proto.Message.InteractiveMessage.Footer.create({
+            text: "Bot"
+          }),
+          header: proto.Message.InteractiveMessage.Header.create({
+            title: "Igna",
+            subtitle: "test",
+            hasMediaAttachment: false
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: [
+              {
+                "name": "single_select",
+                "buttonParamsJson": "{\"title\":\"title\",\"sections\":[{\".menu\":\".play dj webito\",\"highlight_label\":\"label\",\"rows\":[{\"header\":\"header\",\"title\":\"title\",\"description\":\"description\",\"id\":\"id\"},{\"header\":\"header\",\"title\":\"title\",\"description\":\"description\",\"id\":\"id\"}]}]}"
+              },
+              {
+                "name": "cta_reply",
+                "buttonParamsJson": "{\"display_text\":\"quick_reply\",\"id\":\"message\"}"
+              },
+              {
+                 "name": "cta_url",
+                 "buttonParamsJson": "{\"display_text\":\"url\",\"url\":\"https://www.google.com\",\"merchant_url\":\"https://www.google.com\"}"
+              },
+              {
+                 "name": "cta_call",
+                 "buttonParamsJson": "{\"display_text\":\"call\",\"id\":\"message\"}"
+              },
+              {
+                 "name": "cta_copy",
+                 "buttonParamsJson": "{\"display_text\":\"copy\",\"id\":\"123456789\",\"copy_code\":\"message\"}"
+              },
+              {
+                 "name": "cta_reminder",
+                 "buttonParamsJson": "{\"display_text\":\"Recordatorio\",\"id\":\"message\"}"
+              },
+              {
+                 "name": "cta_cancel_reminder",
+                 "buttonParamsJson": "{\"display_text\":\"cta_cancel_reminder\",\"id\":\"message\"}"
+              },
+              {
+                 "name": "address_message",
+                 "buttonParamsJson": "{\"display_text\":\"address_message\",\"id\":\"message\"}"
+              },
+              {
+                 "name": "send_location",
+                 "buttonParamsJson": ""
+              }
+           ],
+          })
+        })
+    }
+  }
+}, {})
+
+return client.relayMessage(msg.key.remoteJid, msg.message, { messageId: msg.key.id })
+```
+
+## buttons double:
+```
+client.sendMessage(m.key.remoteJid, {
+  text: "Hello Wolrd !;", 
+  footer: "© Fizzxy Dev",
+  buttons: [
+  {
+    buttonId: '.tes',
+    buttonText: {
+      displayText: 'TESTING BOT'
+    },
+    type: 1,
+  },
+  {
+    buttonId: ' ',
+    buttonText: {
+      displayText: 'PRIVATE SCRIPT'
+    },
+    type: 1,
+  },
+  {
+    buttonId: 'action',
+    buttonText: {
+      displayText: 'ini pesan interactiveMeta'
+    },
+    type: 4,
+    nativeFlowInfo: {
+      name: 'single_select',
+      paramsJson: JSON.stringify({
+        title: 'message',
+        sections: [
+          {
+            title: 'FizzxyDev - 2025',
+            highlight_label: '😜',
+            rows: [
+              {
+                header: 'HEADER',
+                title: 'TITLE',
+                description: 'DESCRIPTION',
+                id: 'YOUR ID',
+              },
+              {
+                header: 'HEADER',
+                title: 'TITLE',
+                description: 'DESCRIPTION',
+                id: 'YOUR ID',
+              },
+            ],
+          },
+        ],
+      }),
+    },
+  },
+  ],
+  headerType: 1,
+  viewOnce: true
+}, { quoted: m });
+```
 ## Example
 
 Do check out & run [example.ts](Example/example.ts) to see an example usage of the library.
 The script covers most common use cases.
 To run the example script, download or clone the repo and then type the following in a terminal:
-1. ``` cd path/to/Baileys ```
+1. ``` cd path/to/BaileysPro ```
 2. ``` yarn ```
 3. ``` yarn example ```
 
@@ -33,17 +716,17 @@ To run the example script, download or clone the repo and then type the followin
 
 Use the stable version:
 ```
-yarn add akiraa-baileys
+yarn add @FizzxyDev/BaileysPro
 ```
 
 Use the edge version (no guarantee of stability, but latest fixes + features)
 ```
-yarn add github:LT-SYAII/Bail
+yarn add github:FizzxyDev/BaileysV2
 ```
 
 Then import your code using:
 ``` ts 
-import makeWASocket from 'akiraa-baileys'
+import makeWASocket from '@FizzxyDev/BaileysPro'
 ```
 
 ## Unit Tests
@@ -52,10 +735,10 @@ TODO
 
 ## Connecting multi device (recommended)
 
-WhatsApp provides a multi-device API that allows Baileys to be authenticated as a second WhatsApp client by scanning a QR code with WhatsApp on your phone.
+WhatsApp provides a multi-device API that allows BaileysPro to be authenticated as a second WhatsApp client by scanning a QR code with WhatsApp on your phone.
 
 ``` ts
-import makeWASocket, { DisconnectReason } from 'akiraa-baileys'
+import makeWASocket, { DisconnectReason } from '@FizzxyDev/BaileysPro'
 import { Boom } from '@hapi/boom'
 
 async function connectToWhatsApp () {
@@ -80,7 +763,7 @@ async function connectToWhatsApp () {
         console.log(JSON.stringify(m, undefined, 2))
 
         console.log('replying to', m.messages[0].key.remoteJid)
-        await sock.sendMessage(m.messages[0].key.remoteJid!, { text: 'Hello there!' })
+        await client.sendMessage(m.messages[0].key.remoteJid!, { text: 'Hello there!' })
     })
 }
 // run in main file
@@ -95,7 +778,7 @@ If the connection is successful, you will see a QR code printed on your terminal
 
 ## Connecting native mobile api
 
-Baileys also supports the native mobile API, which allows users to authenticate as a standalone WhatsApp client using their phone number.
+BaileysPro also supports the native mobile API, which allows users to authenticate as a standalone WhatsApp client using their phone number.
 
 Run the [example](Example/example.ts) file with ``--mobile`` cli flag to use the native mobile API.
 
@@ -154,9 +837,9 @@ type SocketConfig = {
     msgRetryCounterMap?: MessageRetryMap
     /** width for link preview images */
     linkPreviewImageThumbnailWidth: number
-    /** Should Baileys ask the phone for full history, will be received async */
+    /** Should BaileysPro ask the phone for full history, will be received async */
     syncFullHistory: boolean
-    /** Should baileys fire init queries automatically, default true */
+    /** Should BaileysPro fire init queries automatically, default true */
     fireInitQueries: boolean
     /**
      * generate a high quality link preview,
@@ -176,7 +859,7 @@ type SocketConfig = {
 
 ### Emulating the Desktop app instead of the web
 
-1. Baileys, by default, emulates a chrome web session
+1. BaileysPro, by default, emulates a chrome web session
 2. If you'd like to emulate a desktop connection (and receive more message history), add this to your Socket config:
     ``` ts
     const conn = makeWASocket({
@@ -193,12 +876,12 @@ You obviously don't want to keep scanning the QR code every time you want to con
 
 So, you can load the credentials to log back in:
 ``` ts
-import makeWASocket, { BufferJSON, useMultiFileAuthState } from 'akiraa-baileys'
+import makeWASocket, { BufferJSON, useMultiFileAuthState } from '@FizzxyDev/BaileysPro'
 import * as fs from 'fs'
 
 // utility function to help save the auth state in a single folder
 // this function serves as a good guide to help write auth & key states for SQL/no-SQL databases, which I would recommend in any production grade system
-const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys')
+const { state, saveCreds } = await useMultiFileAuthState('auth_info_BaileysPro')
 // will use the given state to connect
 // so if valid credentials are available -- it'll connect without QR
 const conn = makeWASocket({ auth: state }) 
@@ -210,7 +893,7 @@ conn.ev.on ('creds.update', saveCreds)
 
 ## Listening to Connection Updates
 
-Baileys now fires the `connection.update` event to let you know something has updated in the connection. This data has the following structure:
+BaileysPro now fires the `connection.update` event to let you know something has updated in the connection. This data has the following structure:
 ``` ts
 type ConnectionState = {
 	/** connection is now open, connecting or closed */
@@ -233,14 +916,14 @@ type ConnectionState = {
 
 ## Handling Events
 
-Baileys uses the EventEmitter syntax for events. 
+BaileysPro uses the EventEmitter syntax for events. 
 They're all nicely typed up, so you shouldn't have any issues with an Intellisense editor like VS Code.
 
 The events are typed as mentioned here:
 
 ``` ts
 
-export type BaileysEventMap = {
+export type BaileysProEventMap = {
     /** connection state has been updated -- WS closed, opened, connecting etc. */
 	'connection.update': Partial<ConnectionState>
     /** credentials updated -- some metadata, keys or something */
@@ -303,20 +986,20 @@ sock.ev.on('messages.upsert', ({ messages }) => {
 
 ## Implementing a Data Store
 
-Baileys does not come with a defacto storage for chats, contacts, or messages. However, a simple in-memory implementation has been provided. The store listens for chat updates, new messages, message updates, etc., to always have an up-to-date version of the data.
+BaileysPro does not come with a defacto storage for chats, contacts, or messages. However, a simple in-memory implementation has been provided. The store listens for chat updates, new messages, message updates, etc., to always have an up-to-date version of the data.
 
 It can be used as follows:
 
 ``` ts
-import makeWASocket, { makeInMemoryStore } from 'akiraa-baileys'
+import makeWASocket, { makeInMemoryStore } from '@FizzxyDev/BaileysPro'
 // the store maintains the data of the WA connection in memory
 // can be written out to a file & read from it
 const store = makeInMemoryStore({ })
 // can be read from a file
-store.readFromFile('./baileys_store.json')
+store.readFromFile('./BaileysPro_store.json')
 // saves the state to a file every 10s
 setInterval(() => {
-    store.writeToFile('./baileys_store.json')
+    store.writeToFile('./BaileysPro_store.json')
 }, 10_000)
 
 const sock = makeWASocket({ })
@@ -347,17 +1030,17 @@ The store also provides some simple functions such as `loadMessages` that utiliz
 ### Non-Media Messages
 
 ``` ts
-import { MessageType, MessageOptions, Mimetype } from 'akiraa-baileys'
+import { MessageType, MessageOptions, Mimetype } from '@FizzxyDev/BaileysPro'
 
 const id = 'abcd@s.whatsapp.net' // the WhatsApp ID 
 // send a simple text!
-const sentMsg  = await sock.sendMessage(id, { text: 'oh hello there' })
+const sentMsg  = await client.sendMessage(id, { text: 'oh hello there' })
 // send a reply messagge
-const sentMsg  = await sock.sendMessage(id, { text: 'oh hello there' }, { quoted: message })
+const sentMsg  = await client.sendMessage(id, { text: 'oh hello there' }, { quoted: message })
 // send a mentions message
-const sentMsg  = await sock.sendMessage(id, { text: '@12345678901', mentions: ['12345678901@s.whatsapp.net'] })
+const sentMsg  = await client.sendMessage(id, { text: '@12345678901', mentions: ['12345678901@s.whatsapp.net'] })
 // send a location!
-const sentMsg  = await sock.sendMessage(
+const sentMsg  = await client.sendMessage(
     id, 
     { location: { degreesLatitude: 24.121231, degreesLongitude: 55.1121221 } }
 )
@@ -368,7 +1051,7 @@ const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
             + 'ORG:Ashoka Uni;\n' // the organization of the contact
             + 'TEL;type=CELL;type=VOICE;waid=911234567890:+91 12345 67890\n' // WhatsApp ID + phone number
             + 'END:VCARD'
-const sentMsg  = await sock.sendMessage(
+const sentMsg  = await client.sendMessage(
     id,
     { 
         contacts: { 
@@ -385,30 +1068,30 @@ const reactionMessage = {
     }
 }
 
-const sendMsg = await sock.sendMessage(id, reactionMessage)
+const sendMsg = await client.sendMessage(id, reactionMessage)
 ```
 
 ### Sending messages with link previews
 
 1. By default, WA MD does not have link generation when sent from the web
-2. Baileys has a function to generate the content for these link previews
+2. BaileysPro has a function to generate the content for these link previews
 3. To enable this function's usage, add `link-preview-js` as a dependency to your project with `yarn add link-preview-js`
 4. Send a link:
 ``` ts
 // send a link
-const sentMsg  = await sock.sendMessage(id, { text: 'Hi, this was sent using https://github.com/adiwajshing/baileys' })
+const sentMsg  = await client.sendMessage(id, { text: 'Hi, this was sent using https://github.com/adiwajshing/BaileysPro' })
 ```
 
 ### Media Messages
 
 Sending media (video, stickers, images) is easier & more efficient than ever. 
 - You can specify a buffer, a local url or even a remote url.
-- When specifying a media url, Baileys never loads the entire buffer into memory; it even encrypts the media as a readable stream.
+- When specifying a media url, BaileysPro never loads the entire buffer into memory; it even encrypts the media as a readable stream.
 
 ``` ts
-import { MessageType, MessageOptions, Mimetype } from 'akiraa-baileys'
+import { MessageType, MessageOptions, Mimetype } from '@FizzxyDev/BaileysPro'
 // Sending gifs
-await sock.sendMessage(
+await client.sendMessage(
     id, 
     { 
         video: fs.readFileSync("Media/ma_gif.mp4"), 
@@ -417,7 +1100,7 @@ await sock.sendMessage(
     }
 )
 
-await sock.sendMessage(
+await client.sendMessage(
     id, 
     { 
         video: "./Media/ma_gif.mp4", 
@@ -427,7 +1110,7 @@ await sock.sendMessage(
 )
 
 // send an audio file
-await sock.sendMessage(
+await client.sendMessage(
     id, 
     { audio: { url: "./Media/audio.mp3" }, mimetype: 'audio/mp4' }
     { url: "Media/audio.mp3" }, // can send mp3, mp4, & ogg
@@ -455,7 +1138,7 @@ await sock.sendMessage(
                                     Do not enter this field if you want to automatically generate a thumb
                                 */
         mimetype: Mimetype.pdf, /* (for media messages) specify the type of media (optional for all media types except documents),
-                                    import {Mimetype} from 'akiraa-baileys'
+                                    import {Mimetype} from '@FizzxyDev/BaileysPro'
                                 */
         fileName: 'somefile.pdf', // (for media messages) file name for the media
         /* will send audio messages as voice notes, if set to true */
@@ -469,13 +1152,13 @@ await sock.sendMessage(
 
 ``` ts
 const msg = getMessageFromStore('455@s.whatsapp.net', 'HSJHJWH7323HSJSJ') // implement this on your end
-await sock.sendMessage('1234@s.whatsapp.net', { forward: msg }) // WA forward the message!
+await client.sendMessage('1234@s.whatsapp.net', { forward: msg }) // WA forward the message!
 ```
 
 ## Reading Messages
 
 A set of message keys must be explicitly marked read now. 
-In multi-device, you cannot mark an entire "chat" read as it were with Baileys Web.
+In multi-device, you cannot mark an entire "chat" read as it were with BaileysPro Web.
 This means you have to keep track of unread messages.
 
 ``` ts
@@ -507,14 +1190,14 @@ type WAPresence = 'unavailable' | 'available' | 'composing' | 'recording' | 'pau
 
 The presence expires after about 10 seconds.
 
-**Note:** In the multi-device version of WhatsApp -- if a desktop client is active, WA doesn't send push notifications to the device. If you would like to receive said notifications -- mark your Baileys client offline using `sock.sendPresenceUpdate('unavailable')`
+**Note:** In the multi-device version of WhatsApp -- if a desktop client is active, WA doesn't send push notifications to the device. If you would like to receive said notifications -- mark your BaileysPro client offline using `sock.sendPresenceUpdate('unavailable')`
 
 ## Downloading Media Messages
 
 If you want to save the media you received
 ``` ts
 import { writeFile } from 'fs/promises'
-import { downloadMediaMessage } from 'akiraa-baileys'
+import { downloadMediaMessage } from '@FizzxyDev/BaileysPro'
 
 sock.ev.on('messages.upsert', async ({ messages }) => {
     const m = messages[0]
@@ -530,7 +1213,7 @@ sock.ev.on('messages.upsert', async ({ messages }) => {
             { },
             { 
                 logger,
-                // pass this so that baileys can request a reupload of media
+                // pass this so that BaileysPro can request a reupload of media
                 // that has been deleted
                 reuploadRequest: sock.updateMediaMessage
             }
@@ -550,10 +1233,10 @@ const updatedMediaMsg = await sock.updateMediaMessage(msg)
 
 ``` ts
 const jid = '1234@s.whatsapp.net' // can also be a group
-const response = await sock.sendMessage(jid, { text: 'hello!' }) // send a message
+const response = await client.sendMessage(jid, { text: 'hello!' }) // send a message
 // sends a message to delete the given message
 // this deletes the message for everyone
-await sock.sendMessage(jid, { delete: response.key })
+await client.sendMessage(jid, { delete: response.key })
 ```
 
 **Note:** deleting for oneself is supported via `chatModify` (next section)
@@ -563,7 +1246,7 @@ await sock.sendMessage(jid, { delete: response.key })
 ``` ts
 const jid = '1234@s.whatsapp.net'
 
-await sock.sendMessage(jid, {
+await client.sendMessage(jid, {
       text: 'updated text goes here',
       edit: response.key,
     });
@@ -636,15 +1319,15 @@ WA uses an encrypted form of communication to send chat/app updates. This has be
 ``` ts
 const jid = '1234@s.whatsapp.net' // can also be a group
 // turn on disappearing messages
-await sock.sendMessage(
+await client.sendMessage(
     jid, 
     // this is 1 week in seconds -- how long you want messages to appear for
     { disappearingMessagesInChat: WA_DEFAULT_EPHEMERAL }
 )
 // will send as a disappearing message
-await sock.sendMessage(jid, { text: 'hello' }, { ephemeralExpiration: WA_DEFAULT_EPHEMERAL })
+await client.sendMessage(jid, { text: 'hello' }, { ephemeralExpiration: WA_DEFAULT_EPHEMERAL })
 // turn off disappearing messages
-await sock.sendMessage(
+await client.sendMessage(
     jid, 
     { disappearingMessagesInChat: false }
 )
@@ -777,7 +1460,7 @@ Of course, replace ``` xyz ``` with an actual ID.
     // title & participants
     const group = await sock.groupCreate("My Fab Group", ["1234@s.whatsapp.net", "4564@s.whatsapp.net"])
     console.log ("created group with id: " + group.gid)
-    sock.sendMessage(group.id, { text: 'hello there' }) // say hello to everyone on the group
+    client.sendMessage(group.id, { text: 'hello there' }) // say hello to everyone on the group
     ```
 - To add/remove people to a group or demote/promote people
     ``` ts
@@ -905,7 +1588,7 @@ Of course, replace ``` xyz ``` with an actual ID.
 Messages can be sent to broadcasts & stories. 
 you need to add the following message options in sendMessage, like this:
 ```ts
-sock.sendMessage(jid, {image: {url: url}, caption: caption}, {backgroundColor : backgroundColor, font : font, statusJidList: statusJidList, broadcast : true})
+client.sendMessage(jid, {image: {url: url}, caption: caption}, {backgroundColor : backgroundColor, font : font, statusJidList: statusJidList, broadcast : true})
 ```
 - the message body can be a extendedTextMessage or imageMessage or videoMessage or voiceMessage
 - You can add backgroundColor and other options in the message options
@@ -922,7 +1605,7 @@ sock.sendMessage(jid, {image: {url: url}, caption: caption}, {backgroundColor : 
     ```
 
 ## Writing Custom Functionality
-Baileys is written with custom functionality in mind. Instead of forking the project & re-writing the internals, you can simply write your own extensions.
+BaileysPro is written with custom functionality in mind. Instead of forking the project & re-writing the internals, you can simply write your own extensions.
 
 First, enable the logging of unhandled messages from WhatsApp by setting:
 ``` ts
