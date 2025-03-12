@@ -29,26 +29,6 @@ To run the example script, download or clone the repo and then type the followin
 2. ``` yarn ```
 3. ``` yarn example ```
 
-## Install
-
-Use the stable version:
-```
-yarn add akiraa-baileys
-```
-
-Use the edge version (no guarantee of stability, but latest fixes + features)
-```
-yarn add github:LT-SYAII/Bail
-```
-
-Then import your code using:
-``` ts 
-import makeWASocket from 'akiraa-baileys'
-```
-
-## Unit Tests
-
-TODO
 
 ## Connecting multi device (recommended)
 
