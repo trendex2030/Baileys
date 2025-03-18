@@ -1,6 +1,6 @@
 {
   "name": "@whiskeysockets/baileys",
-  "version": "1.5.5",
+  "version": "1.6.0",
   "description": "WhatsApp API",
   "keywords": [
     "whatsapp",
@@ -11,9 +11,9 @@
     "newsletter",
     "whatsapp-bot"
   ],
-  "homepage": "https://github.com/LT-SYAII/Bail",
+  "homepage": "https://github.com/Dark-Xploit/Baileys",
   "repository": {
-    "url": "git+ssh://git@github.com/LT-SYAII/Bail.git"
+    "url": "git+ssh://git@github.com/Dark-Xploit/Baileys.git"
   },
   "license": "MIT",
   "author": "Adhiraj Singh",
