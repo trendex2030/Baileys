@@ -4,6 +4,7 @@ export * from './Chat';
 export * from './Contact';
 export * from './State';
 export * from './Message';
+export * from './Newsletter';
 export * from './Socket';
 export * from './Events';
 export * from './Product';
@@ -19,6 +20,8 @@ export type BrowsersMap = {
     macOS(browser: string): [string, string, string];
     baileys(browser: string): [string, string, string];
     windows(browser: string): [string, string, string];
+    iOS(browser: string): [string, string, string];
+    linux(browser: string): [string, string, string];
     appropriate(browser: string): [string, string, string];
 };
 export declare enum DisconnectReason {

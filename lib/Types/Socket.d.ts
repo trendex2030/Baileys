@@ -1,10 +1,8 @@
-/// <reference types="node" />
-/// <reference types="node" />
 import { AxiosRequestConfig } from 'axios';
 import type { Agent } from 'https';
+import type { Logger } from 'pino';
 import type { URL } from 'url';
 import { proto } from '../../WAProto';
-import { ILogger } from '../Utils/logger';
 import { AuthenticationState, SignalAuthState, TransactionCapabilityOptions } from './Auth';
 import { GroupMetadata } from './GroupMetadata';
 import { MediaConnInfo } from './Message';
@@ -30,14 +28,12 @@ export type SocketConfig = {
     defaultQueryTimeoutMs: number | undefined;
     /** ping-pong interval for WS connection */
     keepAliveIntervalMs: number;
-    /** should baileys use the mobile api instead of the multi device api
-     * @deprecated This feature has been removed
-    */
+    /** should baileys use the mobile api instead of the multi device api */
     mobile?: boolean;
     /** proxy agent */
     agent?: Agent;
-    /** logger */
-    logger: ILogger;
+    /** pino logger */
+    logger: Logger;
     /** version to connect with */
     version: WAVersion;
     /** override browser config */
@@ -115,4 +111,6 @@ export type SocketConfig = {
     /** cached group metadata, use to prevent redundant requests to WA & speed up msg sending */
     cachedGroupMetadata: (jid: string) => Promise<GroupMetadata | undefined>;
     makeSignalRepository: (auth: SignalAuthState) => SignalRepository;
+    /** Socket passthrough */
+    socket?: any;
 };
