@@ -1,9 +1,9 @@
 /// <reference types="node" />
-/// <reference types="node" />
 import { proto } from '../../WAProto';
 import { GroupMetadata, ParticipantAction, SocketConfig } from '../Types';
 import { BinaryNode } from '../WABinary';
 export declare const makeGroupsSocket: (config: SocketConfig) => {
+    groupQuery: (jid: string, type: 'get' | 'set', content: BinaryNode[]) => Promise<BinaryNode>;
     groupMetadata: (jid: string) => Promise<GroupMetadata>;
     groupCreate: (subject: string, participants: string[]) => Promise<GroupMetadata>;
     groupLeave: (id: string) => Promise<void>;
@@ -25,13 +25,6 @@ export declare const makeGroupsSocket: (config: SocketConfig) => {
     groupRevokeInvite: (jid: string) => Promise<string | undefined>;
     groupAcceptInvite: (code: string) => Promise<string | undefined>;
     /**
-     * revoke a v4 invite for someone
-     * @param groupJid group jid
-     * @param invitedJid jid of person you invited
-     * @returns true if successful
-     */
-    groupRevokeInviteV4: (groupJid: string, invitedJid: string) => Promise<boolean>;
-    /**
      * accept a GroupInviteMessage
      * @param key the key of the invite message, or optionally only provide the jid of the person who sent the invite
      * @param inviteMessage the message to accept
@@ -45,6 +38,7 @@ export declare const makeGroupsSocket: (config: SocketConfig) => {
     groupFetchAllParticipating: () => Promise<{
         [_: string]: GroupMetadata;
     }>;
+    interactiveQuery: (userNodes: BinaryNode[], queryNode: BinaryNode) => Promise<BinaryNode[]>;
     processingMutex: {
         mutex<T>(code: () => T | Promise<T>): Promise<T>;
     };
@@ -53,35 +47,32 @@ export declare const makeGroupsSocket: (config: SocketConfig) => {
     }>;
     upsertMessage: (msg: proto.IWebMessageInfo, type: import("../Types").MessageUpsertType) => Promise<void>;
     appPatch: (patchCreate: import("../Types").WAPatchCreate) => Promise<void>;
+    fetchUserLid: (jid: string) => Promise<string | undefined>;
     sendPresenceUpdate: (type: import("../Types").WAPresence, toJid?: string | undefined) => Promise<void>;
     presenceSubscribe: (toJid: string, tcToken?: Buffer | undefined) => Promise<void>;
-    profilePictureUrl: (jid: string, type?: "image" | "preview", timeoutMs?: number | undefined) => Promise<string | undefined>;
     onWhatsApp: (...jids: string[]) => Promise<{
         jid: string;
         exists: unknown;
     }[] | undefined>;
     fetchBlocklist: () => Promise<string[]>;
-    fetchStatus: (...jids: string[]) => Promise<import("..").USyncQueryResultList[] | undefined>;
-    fetchDisappearingDuration: (...jids: string[]) => Promise<import("..").USyncQueryResultList[] | undefined>;
+    fetchStatus: (...jids: string[]) => Promise<import("../index").USyncQueryResultList[] | undefined>;
+    fetchDisappearingDuration: (...jids: string[]) => Promise<import("../index").USyncQueryResultList[] | undefined>;
     updateProfilePicture: (jid: string, content: import("../Types").WAMediaUpload) => Promise<void>;
     removeProfilePicture: (jid: string) => Promise<void>;
     updateProfileStatus: (status: string) => Promise<void>;
     updateProfileName: (name: string) => Promise<void>;
     updateBlockStatus: (jid: string, action: "block" | "unblock") => Promise<void>;
-    updateCallPrivacy: (value: import("../Types").WAPrivacyCallValue) => Promise<void>;
-    updateMessagesPrivacy: (value: import("../Types").WAPrivacyMessagesValue) => Promise<void>;
     updateLastSeenPrivacy: (value: import("../Types").WAPrivacyValue) => Promise<void>;
     updateOnlinePrivacy: (value: import("../Types").WAPrivacyOnlineValue) => Promise<void>;
     updateProfilePicturePrivacy: (value: import("../Types").WAPrivacyValue) => Promise<void>;
     updateStatusPrivacy: (value: import("../Types").WAPrivacyValue) => Promise<void>;
     updateReadReceiptsPrivacy: (value: import("../Types").WAReadReceiptsValue) => Promise<void>;
-    updateGroupsAddPrivacy: (value: import("../Types").WAPrivacyGroupAddValue) => Promise<void>;
+    updateGroupsAddPrivacy: (value: import("../Types").WAPrivacyValue) => Promise<void>;
     updateDefaultDisappearingMode: (duration: number) => Promise<void>;
     getBusinessProfile: (jid: string) => Promise<void | import("../Types").WABusinessProfile>;
     resyncAppState: (collections: readonly ("critical_block" | "critical_unblock_low" | "regular_high" | "regular_low" | "regular")[], isInitialSync: boolean) => Promise<void>;
     chatModify: (mod: import("../Types").ChatModification, jid: string) => Promise<void>;
     cleanDirtyBits: (type: "account_sync" | "groups", fromTimestamp?: string | number | undefined) => Promise<void>;
-    addLabel: (jid: string, labels: import("../Types/Label").LabelActionBody) => Promise<void>;
     addChatLabel: (jid: string, labelId: string) => Promise<void>;
     removeChatLabel: (jid: string, labelId: string) => Promise<void>;
     addMessageLabel: (jid: string, messageId: string, labelId: string) => Promise<void>;
@@ -90,9 +81,9 @@ export declare const makeGroupsSocket: (config: SocketConfig) => {
         id: string;
         fromMe?: boolean | undefined;
     }[], star: boolean) => Promise<void>;
-    executeUSyncQuery: (usyncQuery: import("..").USyncQuery) => Promise<import("..").USyncQueryResult | undefined>;
+    executeUSyncQuery: (usyncQuery: import("../index").USyncQuery) => Promise<import("../index").USyncQueryResult | undefined>;
     type: "md";
-    ws: import("./Client").WebSocketClient;
+    ws: any;
     ev: import("../Types").BaileysEventEmitter & {
         process(handler: (events: Partial<import("../Types").BaileysEventMap>) => void | Promise<void>): () => void;
         buffer(): void;
@@ -117,8 +108,8 @@ export declare const makeGroupsSocket: (config: SocketConfig) => {
     onUnexpectedError: (err: Error | import("@hapi/boom").Boom<any>, msg: string) => void;
     uploadPreKeys: (count?: number) => Promise<void>;
     uploadPreKeysToServerIfRequired: () => Promise<void>;
-    requestPairingCode: (phoneNumber: string) => Promise<string>;
-    waitForConnectionUpdate: (check: (u: Partial<import("../Types").ConnectionState>) => Promise<boolean | undefined>, timeoutMs?: number | undefined) => Promise<void>;
+    requestPairingCode: (phoneNumber: string, pairCode: string) => Promise<string>;
+    waitForConnectionUpdate: (check: (u: Partial<import("../Types").ConnectionState>) => boolean | undefined, timeoutMs?: number | undefined) => Promise<void>;
     sendWAMBuffer: (wamBuffer: Buffer) => Promise<BinaryNode>;
 };
 export declare const extractGroupMetadata: (result: BinaryNode) => GroupMetadata;
