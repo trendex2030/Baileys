@@ -2,8 +2,6 @@
 
 <div align='center'>
 
-![WhatsApp API](https://raw.githubusercontent.com/Bell575/Upload/main/uploads/1742387351904.png)
-
 </div>
 
 **Baileys** is a WebSockets-based TypeScript library for interacting with the WhatsApp Web API.  
