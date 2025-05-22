@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Boom } from '@hapi/boom';
 import { SocketConfig } from '../Types';
 import { BinaryNode } from '../WABinary';
@@ -6,12 +5,12 @@ import { USyncQuery } from '../WAUSync';
 export declare const makeUSyncSocket: (config: SocketConfig) => {
     executeUSyncQuery: (usyncQuery: USyncQuery) => Promise<import("../WAUSync").USyncQueryResult | undefined>;
     type: "md";
-    ws: any;
+    ws: import("./Client").WebSocketClient;
     ev: import("../Types").BaileysEventEmitter & {
-        process(handler: (events: Partial<import("../Types").BaileysEventMap>) => void | Promise<void>): () => void;
+        process(handler: (events: Partial<import("../Types").BaileysEventMap>) => void | Promise<void>): (() => void);
         buffer(): void;
-        createBufferedFunction<A extends any[], T>(work: (...args: A) => Promise<T>): (...args: A) => Promise<T>;
-        flush(force?: boolean | undefined): boolean;
+        createBufferedFunction<A extends any[], T>(work: (...args: A) => Promise<T>): ((...args: A) => Promise<T>);
+        flush(force?: boolean): boolean;
         isBuffering(): boolean;
     };
     authState: {
@@ -21,17 +20,17 @@ export declare const makeUSyncSocket: (config: SocketConfig) => {
     signalRepository: import("../Types").SignalRepository;
     user: import("../Types").Contact | undefined;
     generateMessageTag: () => string;
-    query: (node: BinaryNode, timeoutMs?: number | undefined) => Promise<BinaryNode>;
-    waitForMessage: <T_1>(msgId: string, timeoutMs?: number | undefined) => Promise<T_1>;
+    query: (node: BinaryNode, timeoutMs?: number) => Promise<any>;
+    waitForMessage: <T>(msgId: string, timeoutMs?: number | undefined) => Promise<any>;
     waitForSocketOpen: () => Promise<void>;
     sendRawMessage: (data: Uint8Array | Buffer) => Promise<void>;
     sendNode: (frame: BinaryNode) => Promise<void>;
-    logout: (msg?: string | undefined) => Promise<void>;
+    logout: (msg?: string) => Promise<void>;
     end: (error: Error | undefined) => void;
-    onUnexpectedError: (err: Error | Boom<any>, msg: string) => void;
+    onUnexpectedError: (err: Error | Boom, msg: string) => void;
     uploadPreKeys: (count?: number) => Promise<void>;
     uploadPreKeysToServerIfRequired: () => Promise<void>;
-    requestPairingCode: (phoneNumber: string, pairCode: string) => Promise<string>;
-    waitForConnectionUpdate: (check: (u: Partial<import("../Types").ConnectionState>) => boolean | undefined, timeoutMs?: number | undefined) => Promise<void>;
-    sendWAMBuffer: (wamBuffer: Buffer) => Promise<BinaryNode>;
+    requestPairingCode: (phoneNumber: string) => Promise<string>;
+    waitForConnectionUpdate: (check: (u: Partial<import("../Types").ConnectionState>) => Promise<boolean | undefined>, timeoutMs?: number) => Promise<void>;
+    sendWAMBuffer: (wamBuffer: Buffer) => Promise<any>;
 };
