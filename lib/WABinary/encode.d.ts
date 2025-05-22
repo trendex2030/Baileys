@@ -1,2 +1,2 @@
-import type { BinaryNode, BinaryNodeCodingOptions } from './types';
-export declare const encodeBinaryNode: (node: BinaryNode, opts?: Pick<BinaryNodeCodingOptions, "TAGS" | "TOKEN_MAP">, buffer?: number[]) => Buffer;
+import { BinaryInfo } from './BinaryInfo';
+export declare const encodeWAM: (binaryInfo: BinaryInfo) => Buffer<ArrayBuffer>;

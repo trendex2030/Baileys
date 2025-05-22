@@ -1,27 +1,39 @@
-export declare const TAGS: {
-    LIST_EMPTY: number;
-    DICTIONARY_0: number;
-    DICTIONARY_1: number;
-    DICTIONARY_2: number;
-    DICTIONARY_3: number;
-    AD_JID: number;
-    LIST_8: number;
-    LIST_16: number;
-    JID_PAIR: number;
-    HEX_8: number;
-    BINARY_8: number;
-    BINARY_20: number;
-    BINARY_32: number;
-    NIBBLE_8: number;
-    PACKED_MAX: number;
-    SINGLE_BYTE_MAX: number;
-    STREAM_END: number;
-};
-export declare const DOUBLE_BYTE_TOKENS: string[][];
-export declare const SINGLE_BYTE_TOKENS: (string | null)[];
-export declare const TOKEN_MAP: {
-    [token: string]: {
-        dict?: number;
-        index: number;
+export declare const WEB_EVENTS: Event[];
+export declare const WEB_GLOBALS: Global[];
+export declare const FLAG_BYTE = 8, FLAG_GLOBAL = 0, FLAG_EVENT = 1, FLAG_FIELD = 2, FLAG_EXTENDED = 4;
+export type Event = {
+    name: string;
+    id: number;
+    props: {
+        [key: string]: [number, string | {
+            [key: string]: number;
+        }];
     };
+    weight: number;
+    wamChannel: string;
+    privateStatsIdInt: number;
 };
+export type Global = {
+    name: string;
+    id: number;
+    type: string | {
+        [key: string]: number;
+    };
+    validator?: string;
+    channels: string[];
+};
+type EventByName<T extends Event['name']> = Extract<Event, {
+    name: T;
+}>;
+export type EventInputType = {
+    [key in Event['name']]: {
+        props: {
+            [k in keyof EventByName<key>['props']]: Value;
+        };
+        globals: {
+            [x: string]: Value;
+        };
+    };
+} & {};
+export type Value = number | null | string;
+export {};
